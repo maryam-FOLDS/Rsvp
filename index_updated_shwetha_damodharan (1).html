@@ -529,15 +529,16 @@
         return valid;
       }
 
-      async function submitRsvp(payload) {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          mode: 'cors',
-          credentials: 'omit',
-          redirect: 'follow',
-          cache: 'no-store'
+      const formData = new URLSearchParams();
+
+Object.keys(payload).forEach(key => {
+  formData.append(key, payload[key]);
+});
+
+const response = await fetch(endpoint, {
+  method: 'POST',
+  body: formData
+});'
         });
 
         const contentType = (response.headers.get('content-type') || '').toLowerCase();
